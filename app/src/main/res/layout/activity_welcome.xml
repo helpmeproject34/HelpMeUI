@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_gravity="center_horizontal"
+        android:fillViewport="false">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+                <com.helpme.widgets.SAutoBgButton
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@drawable/friend_track"
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageview_layout_welcome1"
+                    android:clickable="true"/>
+            <com.helpme.widgets.SAutoBgButton
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@drawable/helper_track"
+                android:scaleType="fitXY"
+                android:id="@+id/imageview_layout_welcome3" />
+                <com.helpme.widgets.SAutoBgButton
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@drawable/group_track"
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageview_layout_welcome2" />
+
+                <com.helpme.widgets.SAutoBgButton
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@drawable/contact_track"
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageview_layout_welcome4" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView2"
+       >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/box"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Dashboard"
+                    android:id="@+id/textView9"
+                    android:layout_gravity="left"
+                    android:textColor="#2B547E"
+                    android:padding="10dp"/>
+
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your Location"
+                    android:textSize="15dp"
+                    android:id="@+id/switch_activity_settings_location"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:checked="false"
+                    android:layout_gravity="right" />
+
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Internet Connection"
+                    android:textSize="15dp"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:id="@+id/switch_activity_settings_internet"
+                    android:checked="false" />
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Do Not Disturb"
+                    android:textSize="15dp"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:id="@+id/switch_activity_settings_dnd"
+                    android:checked="false" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/box"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Settings"
+                    android:id="@+id/textview_activity_settings_settings"
+                    android:layout_gravity="left"
+                    android:textColor="#2B547E"
+                    android:padding="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Who Can Track Me"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:id="@+id/textview_activity_settings_whocantrack" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Help"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:id="@+id/textView11" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/box"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Accuracy"
+                    android:id="@+id/textview14"
+                    android:layout_gravity="left"
+                    android:textColor="#2B547E"
+                    android:padding="10dp"/>
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Low"
+                    android:textSize="15dp"
+                    android:id="@+id/switch_activity_settings_accuracy_low"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:checked="false"
+                    android:layout_gravity="right" />
+
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Medium"
+                    android:textSize="15dp"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:id="@+id/switch_activity_settings_accuracy_med"
+                    android:checked="false" />
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="High"
+                    android:textSize="15dp"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:id="@+id/switch_activity_settings_accuracy_high"
+                    android:checked="false" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

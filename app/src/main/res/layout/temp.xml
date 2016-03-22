@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/login_background"
+        android:fillViewport="false">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000">
+
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relative_layout_welcome"
+                android:paddingBottom="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/welcome_background_1"
+
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Welcome Harinath"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textView8"
+                    android:padding="20dp"
+                    android:textAlignment="center"
+
+                    android:textSize="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/box"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your Location"
+                    android:textSize="15dp"
+                    android:id="@+id/switch_welcome_location"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:checked="false"
+                    android:layout_gravity="right" />
+
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Internet Connection"
+                    android:textSize="15dp"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:id="@+id/switch_welcome_internet"
+                    android:checked="false" />
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Do Not Disturb"
+                    android:textSize="15dp"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:id="@+id/switch_welcome_dnd"
+                    android:checked="false" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/box"
+                android:paddingBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                >
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/group"
+                    android:id="@+id/imageview_welcome_groups"
+                    android:layout_marginLeft="10dp"
+                    android:clickable="true"
+                    android:padding="20dp"/>
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/helper"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/imageView2"
+                    android:clickable="true"
+                    android:padding="20dp"/>
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/friend"
+                    android:id="@+id/imageview_welcome_track_friend"
+                    android:layout_gravity="center_horizontal"
+                    android:clickable="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/imageview_welcome_groups"
+                    android:layout_alignLeft="@+id/imageview_welcome_groups"
+                    android:layout_alignStart="@+id/imageview_welcome_groups"
+                    android:padding="20dp"/>
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/contact"
+                    android:id="@+id/imageView4"
+                    android:layout_below="@+id/imageview_welcome_groups"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignRight="@+id/imageView2"
+                    android:layout_alignEnd="@+id/imageView2"
+                    android:padding="20dp"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
