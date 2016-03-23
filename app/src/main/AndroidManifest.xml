@@ -110,11 +110,15 @@
         <receiver android:name="com.helpme.broadcast_recievers.Class_reciever_gps">
             <intent-filter>
                 <action android:name="android.location.PROVIDERS_CHANGED" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
+        <receiver android:name="com.helpme.broadcast_recievers.Class_start_service_reciever">
+            <intent-filter>
+                <action android:name="helpme.start_service" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

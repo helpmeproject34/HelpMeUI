@@ -50,7 +50,7 @@ public class Db_functions {
 	public static void delete_table_prev_login()
 	{
 		
-		db_w.delete("table_prev_login", null,null);
+		db_w.delete("table_prev_login", null, null);
 		
 		
 	}
@@ -78,5 +78,26 @@ public class Db_functions {
 		cv.put("phone", phone);
 		db_w.insert("table_contacts", null, cv);
 	}
-	
+	public void set_dnd()
+	{
+		ContentValues cv=new ContentValues();
+		cv.put("dnd",1);
+		db_w.update("table_prev_login", cv, "", null);
+	}
+	public void unset_dnd()
+	{
+		ContentValues cv=new ContentValues();
+		cv.put("dnd",0);
+		db_w.update("table_prev_login",cv,"",null);
+	}
+	public void set_accuracy(int val)
+	{
+		if(val<0||val>3)
+		{
+			val=2;
+		}
+		ContentValues cv=new ContentValues();
+		cv.put("accuracy",val);
+		db_w.update("table_prev_login",cv,"",null);
+	}
 }

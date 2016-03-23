@@ -274,6 +274,7 @@ public class Class_applocationservice extends Service implements LocationListene
 	@Override
 	public void onProviderDisabled(String provider) {
 		Toast.makeText(getApplicationContext(),"Providers disabled",Toast.LENGTH_SHORT).show();
+		stopSelf();
 	}
 
 	@Override

@@ -11,4 +11,5 @@
         android:id="@+id/listview_activity_tracklist"
         android:divider="@null"
         />
+
 </LinearLayout>

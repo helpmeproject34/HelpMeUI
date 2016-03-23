@@ -2,6 +2,8 @@ package com.helpme.alert_dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -39,7 +41,6 @@ public class Alert_ok {
 	}
 	public  void  ok_or_cancel(Context context,String title,String message)
 	{
-
 		ok_or_cancel(context, title, message, "CANCEL", "OK");
 	}
 	public  void ok_or_cancel(Context context,String title,String message,String left,String right)
@@ -52,10 +53,11 @@ public class Alert_ok {
 		//dialog.setTitle(title);
 		TextView tv=(TextView)dialog.findViewById(R.id.textview_dialog_ok_cancel);
 		tv.setText(message);
+		tv.setTextColor(Color.BLACK);
 		com.helpme.widgets.SAutoBgButton left_button=(com.helpme.widgets.SAutoBgButton)dialog.findViewById(R.id.button_dialog_ok_cancel_left);
 		left_button.setText(left);
 		left_button.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				dialog.dismiss();
@@ -65,15 +67,20 @@ public class Alert_ok {
 		com.helpme.widgets.SAutoBgButton right_button=(com.helpme.widgets.SAutoBgButton)dialog.findViewById(R.id.button_dialog_ok_cancel_right);
 		right_button.setText(right);
 		right_button.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				dialog.dismiss();
 				ontrue();
-				
+
 			}
 		});
-		
+		dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				onfalse();
+			}
+		});
 		dialog.show();
 	}
 	public void ontrue()

@@ -100,7 +100,7 @@ public class Activity_welcome extends Activity {
             alert.ok_or_cancel(this,"","Are you sure for LOGOUT?","Cancel","Logout");
 
         }
-        if(item.getItemId()==R.id.action_settings)
+        else if(item.getItemId()==R.id.action_settings)
         {
 
             Intent i=new Intent(getApplicationContext(),Activity_settings.class);
@@ -110,7 +110,7 @@ public class Activity_welcome extends Activity {
             i.putExtras(bundle);
             startActivity(i);
         }
-        if(item.getItemId()==R.id.action_edit_profile)
+        else if(item.getItemId()==R.id.action_edit_profile)
         {
             Intent i=new Intent(getApplicationContext(),Activity_edit_profiles.class);
             Bundle bundle=new Bundle();
@@ -118,6 +118,10 @@ public class Activity_welcome extends Activity {
             bundle.putString("phone", var_phone);
             i.putExtras(bundle);
             startActivity(i);
+        }
+        else if(item.getItemId()==android.R.id.home)
+        {
+            onBackPressed();
         }
         return super.onMenuItemSelected(featureId, item);
     }

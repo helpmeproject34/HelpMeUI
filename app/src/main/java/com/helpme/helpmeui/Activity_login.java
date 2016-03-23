@@ -18,7 +18,6 @@ import com.helpme.after_login.Activity_welcome;
 import com.helpme.databases.Db_functions;
 import com.helpme.json.Response;
 import com.helpme.register.Activity_register;
-import com.helpme.services.Start_service_from_here;
 
 public class Activity_login extends Activity {
 
@@ -199,7 +198,10 @@ public class Activity_login extends Activity {
                 bundle.putLong("min_time",1000);
                 getBaseContext().startService(serviceIntent);
             }*/
-            Start_service_from_here.start(getBaseContext());
+            //Start_service_from_here.start(getBaseContext());
+            Intent intent=new Intent();
+            intent.setAction("helpme.start_service");
+            sendBroadcast(intent);
         }
     }
     private void databasework(String username,String phone,int dnd,int accuracy)

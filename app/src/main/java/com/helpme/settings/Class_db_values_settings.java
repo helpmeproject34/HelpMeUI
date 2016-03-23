@@ -27,6 +27,7 @@ public class Class_db_values_settings {
         funcs.close_all();
         return result;
     }
+
     public static int give_dnd(Context context)
     {
         int result=-1;
