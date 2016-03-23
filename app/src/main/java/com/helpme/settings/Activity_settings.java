@@ -1,6 +1,7 @@
 package com.helpme.settings;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -21,6 +22,8 @@ public class Activity_settings extends Activity {
     Switch switch_accuracy_med;
     Switch switch_accuracy_high;
     TextView textview_whocantrack;
+    String var_username;
+    String var_phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +50,13 @@ public class Activity_settings extends Activity {
         textview_whocantrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
+                     Intent i=new Intent(Activity_settings.this.getApplicationContext(),Activity_tracklist.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putString("username",var_username);
+                    bundle.putString("phone",var_phone);
+                    i.putExtras(bundle);
+                    startActivity(i);
+                }
         });
     }
     @Override

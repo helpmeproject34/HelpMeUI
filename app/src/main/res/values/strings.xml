@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Help Me UI</string>
+    <string name="app_name">Help Me</string>
     <string name="title_activity_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->

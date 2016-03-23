@@ -22,8 +22,9 @@ public class Class_db_values_settings {
             {
                 result= true;
             }
-            funcs.close_all();
+
         }
+        funcs.close_all();
         return result;
     }
     public static int give_dnd(Context context)

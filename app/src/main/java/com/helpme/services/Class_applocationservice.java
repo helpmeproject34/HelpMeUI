@@ -22,6 +22,7 @@ import com.helpme.helpmeui.R;
 import com.helpme.json.Class_server_details;
 import com.helpme.json.JSONParser;
 import com.helpme.settings.Activity_settings;
+import com.helpme.settings.Class_db_values_settings;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -68,7 +69,31 @@ public class Class_applocationservice extends Service implements LocationListene
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
-
+		if(Class_db_values_settings.is_dnd(getApplicationContext()))
+		{
+			stopSelf();
+		}
+		int accuracy=Class_db_values_settings.give_accuracy(getApplicationContext());
+		if(accuracy==1)
+		{
+			MIN_DISTANCE_FOR_UPDATE=10;
+			MIN_TIME_FOR_UPDATE=10000;
+		}
+		else if(accuracy==2)
+		{
+			MIN_DISTANCE_FOR_UPDATE=5;
+			MIN_TIME_FOR_UPDATE=5000;
+		}
+		else if(accuracy==3)
+		{
+			MIN_DISTANCE_FOR_UPDATE=3;
+			MIN_TIME_FOR_UPDATE=1000;
+		}
+		else
+		{
+			MIN_DISTANCE_FOR_UPDATE=5;
+			MIN_TIME_FOR_UPDATE=3000;
+		}
 		send_notifications();
 		parser=new JSONParser();
 		handler=new Handler();
@@ -80,8 +105,8 @@ public class Class_applocationservice extends Service implements LocationListene
 		crit.setAccuracy(Criteria.ACCURACY_FINE);
 		String best = locationManager.getBestProvider(crit, false);
 		locationManager.requestLocationUpdates(best, MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
-		//return super.onStartCommand(intent, flags, startId);
-		return START_REDELIVER_INTENT;
+		return super.onStartCommand(intent, flags, startId);
+		//return START_REDELIVER_INTENT;
 	}
 
 	public Location getLocation() {
@@ -286,7 +311,7 @@ public class Class_applocationservice extends Service implements LocationListene
 			intent.putExtra("username", Class_alreadyLogin.username);
 			intent.putExtra("phone",Class_alreadyLogin.phone);
 			final PendingIntent pendingIntent = PendingIntent.getActivities(getApplicationContext(), 2,
-					new Intent[] {backIntent, intent}, PendingIntent.FLAG_ONE_SHOT);
+					new Intent[] {backIntent}, PendingIntent.FLAG_ONE_SHOT);
 			builder.setContentIntent(pendingIntent);
 			NotificationManager manager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 			manager.notify(1,builder.build());
