@@ -1,7 +1,6 @@
 package com.helpme.settings;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -9,6 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +26,7 @@ import com.helpme.json.Response;
 
 import java.util.ArrayList;
 
-public class Activity_tracklist extends Activity {
+public class Activity_tracklist extends ActionBarActivity {
 
 
     LinearLayout layout;
@@ -47,9 +47,9 @@ public class Activity_tracklist extends Activity {
         setContentView(R.layout.activity_tracklist);
         Intent intent_recieved= getIntent();
         bundle=intent_recieved.getExtras();
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setDisplayShowHomeEnabled(true);
-        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         if(bundle==null)
         {
             finish();
@@ -116,7 +116,7 @@ public class Activity_tracklist extends Activity {
         return true;
     }
     @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId()==R.id.action_tracklist_refresh)
         {
@@ -130,7 +130,7 @@ public class Activity_tracklist extends Activity {
         {
             finish();
         }
-        return super.onMenuItemSelected(featureId, item);
+        return  super.onOptionsItemSelected(item);
     }
     private void clean()
     {

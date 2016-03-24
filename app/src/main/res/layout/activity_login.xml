@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="@drawable/login_background">
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,7 +13,7 @@
         android:paddingTop="26dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:background="@drawable/login_background"
+
         >
 
         <ImageView android:src="@drawable/logo_big"

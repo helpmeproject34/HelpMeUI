@@ -59,7 +59,7 @@
         <activity
             android:name="com.helpme.settings.Activity_settings"
             android:label="@string/title_activity_activity_settings"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.helpme.helper.Activity_helper"
             android:label="Helpers"
@@ -67,19 +67,19 @@
         <activity
             android:name="com.helpme.profiles.Activity_edit_profiles"
             android:label="Select Profile"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.helpme.profiles.Activity_user_profile"
             android:label="User Profile"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.helpme.profiles.Activity_helper_profile"
             android:label="Helper Profile"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.helpme.after_login.Activity_contact_us"
             android:label="Contact Us"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.helpme.groups.Activity_group_people"
             android:theme="@style/AppTheme2" />
@@ -99,7 +99,7 @@
             android:label="@string/title_activity_activity_show_people"></activity>
 
         <activity android:name="com.helpme.settings.Activity_tracklist"
-            android:theme="@style/AppTheme2"></activity>
+            android:theme="@style/AppTheme"></activity>
         <service
             android:name="com.helpme.services.Class_service_gps"
             android:enabled="true" />

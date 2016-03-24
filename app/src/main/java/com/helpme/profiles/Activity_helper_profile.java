@@ -1,15 +1,15 @@
 package com.helpme.profiles;
 
-import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.helpme.helpmeui.R;
 
-public class Activity_helper_profile extends Activity {
+public class Activity_helper_profile extends ActionBarActivity {
 
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
@@ -17,9 +17,9 @@ public class Activity_helper_profile extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helper_profile);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setDisplayShowHomeEnabled(true);
-        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         load_all_objects();
     }
     @Override
@@ -36,6 +36,7 @@ public class Activity_helper_profile extends Activity {
         adapter = ArrayAdapter.createFromResource(this,R.array.array_helper_categories,R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
 
     }
 }

@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enable My Helper profile"
-        android:id="@+id/switch1"
+        android:id="@+id/switch_activity_helper_profile"
         android:checked="false" />
 
     <ScrollView

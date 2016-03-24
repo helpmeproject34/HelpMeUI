@@ -1,15 +1,15 @@
 package com.helpme.profiles;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.helpme.helpmeui.R;
 
-public class Activity_edit_profiles extends Activity {
+public class Activity_edit_profiles extends ActionBarActivity {
 
     com.helpme.widgets.SAutoBgButton user_profile;
     com.helpme.widgets.SAutoBgButton helper_profile;
@@ -21,9 +21,9 @@ public class Activity_edit_profiles extends Activity {
         setContentView(R.layout.activity_edit_profiles);
         load_objects();
         register_clicks();
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setDisplayShowHomeEnabled(true);
-        getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
     }
     private void load_objects()
     {
