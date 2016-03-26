@@ -100,6 +100,9 @@
 
         <activity android:name="com.helpme.settings.Activity_tracklist"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="com.helpme.helper.Activity_show_helpers_on_map"
+            android:label="Your helpers" />
         <service
             android:name="com.helpme.services.Class_service_gps"
             android:enabled="true" />

@@ -1,7 +1,6 @@
 package com.helpme.helpmeui;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.LocationManager;
@@ -56,15 +55,7 @@ public class Activity_login extends Activity {
             finish();
         }
     }
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(getApplicationContext().ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
+
     private void load_all_objects()
     {
          var_textview_username=(EditText)findViewById(R.id.edittext_username);

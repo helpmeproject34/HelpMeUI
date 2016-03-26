@@ -1,10 +1,12 @@
 package com.helpme.profiles;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
+import com.helpme.helpmeui.Activity_login;
 import com.helpme.helpmeui.R;
 
 public class Activity_user_profile extends ActionBarActivity {
@@ -24,5 +26,12 @@ public class Activity_user_profile extends ActionBarActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void logout()
+    {
+
+        Intent i = new Intent(this, Activity_login.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 }

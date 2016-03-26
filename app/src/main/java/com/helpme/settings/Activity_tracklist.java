@@ -277,12 +277,12 @@ public class Activity_tracklist extends ActionBarActivity {
             if(adapter.arraylist.get(i).check==false)
             {
                 list.add(adapter.arraylist.get(i).name);
-                blocklist.add("1");
+                blocklist.add("0");
             }
             else
             {
                 list.add(adapter.arraylist.get(i).name);
-                blocklist.add("0");
+                blocklist.add("1");
             }
         }
         //final ArrayList<String> phone_list=list;

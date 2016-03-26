@@ -76,7 +76,8 @@ public class Activity_tracking_friend extends FragmentActivity implements OnMapR
 		}
 		else
 		{
-			setContentView(R.layout.activity_tracking_friend);
+			finish();
+			//setContentView(R.layout.activity_tracking_friend);
 		}
 
 

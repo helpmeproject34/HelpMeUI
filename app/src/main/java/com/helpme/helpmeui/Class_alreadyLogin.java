@@ -23,7 +23,7 @@ public class Class_alreadyLogin {
 			cursor.moveToLast();
 			username=cursor.getString(1);
 			phone=cursor.getString(2);
-			
+
 			//Toast.makeText(context, "username and  phone are already found\n"+username+"\n"+phone,3000);
 		}
 		else

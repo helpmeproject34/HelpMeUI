@@ -9,6 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#ffffff"
+
     tools:context="com.helpme.profiles.Activity_helper_profile">
 
     <Switch
@@ -22,12 +23,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView5" >
+        android:id="@+id/scrollview_activity_helper_pofile" >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/linearlayout_activity_helper_profile">
 
             <TextView
                 style="@style/HelperProfile"
@@ -44,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editText" />
+                android:id="@+id/edittext_activity_helper_working_name" />
 
             <TextView
                 style="@style/HelperProfile"
@@ -61,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="phone"
                 android:ems="10"
-                android:id="@+id/editText2" />
+                android:id="@+id/edittext_activity_helper_working_phone" />
 
             <TextView
                 style="@style/HelperProfile"
@@ -98,7 +100,7 @@
                 android:text="Detect My location"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:id="@+id/button2" />
+                android:id="@+id/button_activity_helper_detect_location" />
 
             <com.helpme.widgets.SAutoBgButton
                 style="@style/HelperProfile"
@@ -109,7 +111,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:id="@+id/button3"
+                android:id="@+id/button_activity_helper_change_location"
                 android:enabled="false"/>
             <TextView
                 style="@style/HelperProfile"
@@ -135,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="time"
                     android:textColor="#000000"
-                    android:id="@+id/editText4" />
+                    android:id="@+id/edittext_activity_helper_from" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -150,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="time"
                     android:textColor="#000000"
-                    android:id="@+id/editText5" />
+                    android:id="@+id/edittext_activity_helper_to" />
 
                 <TextView
                 android:layout_width="wrap_content"
@@ -178,49 +180,49 @@
                 android:layout_height="wrap_content"
                 android:text="Sunday"
                 android:layout_marginLeft="30dp"
-                android:id="@+id/checkBox" />
+                android:id="@+id/checkbox_activity_helper_checkbox_0" />
             <CheckBox
                 style="@style/HelperProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Monday"
                 android:layout_marginLeft="30dp"
-                android:id="@+id/checkBox2" />
+                android:id="@+id/checkbox_activity_helper_checkbox_1" />
             <CheckBox
                 style="@style/HelperProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="Tuesday"
-                android:id="@+id/checkBox3" />
+                android:id="@+id/checkbox_activity_helper_checkbox_2" />
             <CheckBox
                 style="@style/HelperProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="Wednesday"
-                android:id="@+id/checkBox4" />
+                android:id="@+id/checkbox_activity_helper_checkbox_3" />
             <CheckBox
                 style="@style/HelperProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="Thursday"
-                android:id="@+id/checkBox5" />
+                android:id="@+id/checkbox_activity_helper_checkbox_4" />
             <CheckBox
                 style="@style/HelperProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="Friday"
-                android:id="@+id/checkBox6" />
+                android:id="@+id/checkbox_activity_helper_checkbox_5" />
             <CheckBox
                 style="@style/HelperProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="Saturday"
-                android:id="@+id/checkBox7" />
+                android:id="@+id/checkbox_activity_helper_checkbox_6" />
 
             <com.helpme.widgets.SAutoBgButton
                 style="@style/HelperProfile"
@@ -229,7 +231,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Save"
-                android:id="@+id/button4" />
+                android:id="@+id/button_activity_helper_change_save" />
 
         </LinearLayout>
     </ScrollView>

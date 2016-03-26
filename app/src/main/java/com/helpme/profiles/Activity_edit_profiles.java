@@ -24,6 +24,22 @@ public class Activity_edit_profiles extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        recieve_intent();
+    }
+    private void recieve_intent()
+    {
+        Intent i=getIntent();
+        if(i==null)
+        {
+            finish();
+        }
+        Bundle bundle=i.getExtras();
+        if(bundle==null)
+        {
+            finish();
+        }
+        var_username=bundle.getString("username");
+        var_phone=bundle.getString("phone");
     }
     private void load_objects()
     {
@@ -37,8 +53,8 @@ public class Activity_edit_profiles extends ActionBarActivity {
             public void onClick(View v) {
                 Intent i=new Intent(getApplicationContext(),Activity_user_profile.class);
                 Bundle bundle=new Bundle();
-                bundle.putString("username","username");
-                bundle.putString("phone", "phone");
+                bundle.putString("username",var_username);
+                bundle.putString("phone", var_phone);
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -48,8 +64,8 @@ public class Activity_edit_profiles extends ActionBarActivity {
             public void onClick(View v) {
                 Intent i=new Intent(getApplicationContext(),Activity_helper_profile.class);
                 Bundle bundle=new Bundle();
-                bundle.putString("username","username");
-                bundle.putString("phone", "phone");
+                bundle.putString("username",var_username);
+                bundle.putString("phone",var_phone);
                 i.putExtras(bundle);
                 startActivity(i);
             }

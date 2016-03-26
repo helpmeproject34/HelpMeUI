@@ -31,57 +31,57 @@
 
                 style="@style/HelperImages"
                 android:background="@drawable/blood_donor"
-                android:id="@+id/imageView1"
+                android:id="@+id/button_activity_helper_1"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
             <com.helpme.widgets.SAutoBgButton
                 android:background="@drawable/carpenter"
                 style="@style/HelperImages"
-                android:id="@+id/imageView2"
+                android:id="@+id/button_activity_helper_2"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                  />
             <com.helpme.widgets.SAutoBgButton
                 style="@style/HelperImages"
                 android:background="@drawable/plumber"
-                android:id="@+id/imageView3"
-                android:layout_below="@+id/imageView1"
+                android:id="@+id/button_activity_helper_3"
+                android:layout_below="@+id/button_activity_helper_1"
                 />
             <com.helpme.widgets.SAutoBgButton
                 style="@style/HelperImages"
                 android:background="@drawable/electrician"
-                android:id="@+id/imageView4"
-                android:layout_below="@+id/imageView2"
+                android:id="@+id/button_activity_helper_4"
+                android:layout_below="@+id/button_activity_helper_2"
                 android:layout_alignParentRight="true"
 
                />
             <com.helpme.widgets.SAutoBgButton
                 android:background="@drawable/bike_rental"
                 style="@style/HelperImages"
-                android:id="@+id/imageView5"
-                android:layout_below="@+id/imageView3"
+                android:id="@+id/button_activity_helper_5"
+                android:layout_below="@+id/button_activity_helper_3"
                 android:layout_alignParentLeft="true"
                 />
             <com.helpme.widgets.SAutoBgButton
                 android:background="@drawable/cleaner"
                 style="@style/HelperImages"
-                android:id="@+id/imageView6"
-                android:layout_below="@+id/imageView4"
+                android:id="@+id/button_activity_helper_6"
+                android:layout_below="@+id/button_activity_helper_4"
                 android:layout_alignParentRight="true"
                 />
             <com.helpme.widgets.SAutoBgButton
                 android:background="@drawable/painter"
                 style="@style/HelperImages"
-                android:id="@+id/imageView7"
-                android:layout_below="@+id/imageView5"
+                android:id="@+id/button_activity_helper_7"
+                android:layout_below="@+id/button_activity_helper_5"
                 android:layout_alignParentLeft="true"
                 />
             <com.helpme.widgets.SAutoBgButton
                 android:background="@drawable/car_rental"
                 style="@style/HelperImages"
-                android:id="@+id/imageView8"
-                android:layout_below="@+id/imageView6"
+                android:id="@+id/button_activity_helper_8"
+                android:layout_below="@+id/button_activity_helper_6"
                 android:layout_alignParentRight="true"
                 />
 

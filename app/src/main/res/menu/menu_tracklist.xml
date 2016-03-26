@@ -12,6 +12,6 @@
         android:icon="@drawable/check"
         android:showAsAction="ifRoom"
         android:visible="true"
-        android:title="Refresh"
+        android:title="Save"
         android:enabled="true"/>
 </menu>

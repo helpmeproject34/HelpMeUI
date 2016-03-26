@@ -13,7 +13,9 @@
         android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
         android:focusable="false"
         android:clickable="false"
-        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:checked="false" />
 
     <TextView

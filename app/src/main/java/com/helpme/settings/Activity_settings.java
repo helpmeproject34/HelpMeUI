@@ -41,9 +41,21 @@ public class Activity_settings extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        recieve_intent();
         load_all_items();
         register_for_clicks();
 
+    }
+    private void recieve_intent()
+    {
+        Intent i=getIntent();
+        Bundle bundle=i.getExtras();
+        if(i==null||bundle==null)
+        {
+            finish();
+        }
+        var_phone=bundle.getString("phone");
+        var_username=bundle.getString("username");
     }
     private void load_all_items()
     {

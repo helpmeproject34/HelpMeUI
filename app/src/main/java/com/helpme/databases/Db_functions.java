@@ -16,7 +16,7 @@ public class Db_functions {
 	Context context;
 	public Db_functions(Context context)
 	{
-		helper=new Dbopenhelper(context,"helpme_db",null,3);
+		helper=new Dbopenhelper(context,"helpme_db",null,4);
 		db_r=helper.getReadableDatabase();
 		db_w=helper.getWritableDatabase();
 		this.context=context;
@@ -51,7 +51,7 @@ public class Db_functions {
 	{
 		
 		db_w.delete("table_prev_login", null, null);
-		
+		db_w.delete("table_helper_profile", null, null);
 		
 	}
 	public Cursor read_table_prev_login()
@@ -60,23 +60,35 @@ public class Db_functions {
 		cursor=db_r.rawQuery("select * from table_prev_login;",null);
 		return cursor;
 	}
-	public Cursor read_table_contacts()
+	public Cursor read_table_helper_profile()
 	{
 		Cursor cursor=null;
-		cursor=db_r.rawQuery("select * from table_contacts;", null);
-		
+		cursor=db_r.rawQuery("select * from table_helper_profile;",null);
 		return cursor;
 	}
-	public void delete_table_contacts()
-	{
-		db_w.delete("table_contacts", null,null);
-	}
-	public void insert_into_table_contact(String name,String phone)
+	public void write_table_helper_profile(String working_name,String working_phone,int category,int from,int to,String working_days)
 	{
 		ContentValues cv=new ContentValues();
-		cv.put("name",name);
-		cv.put("phone", phone);
-		db_w.insert("table_contacts", null, cv);
+		cv.put("working_name",working_name);
+		cv.put("working_phone", working_phone);
+		cv.put("category",category);
+		cv.put("from_",from);
+		cv.put("to_",to);
+		cv.put("working_days",working_days);
+		cv.put("enable_",1);
+		db_w.insert("table_helper_profile", null, cv);
+	}
+	public void disable_helper_profile()
+	{
+		ContentValues cv=new ContentValues();
+		cv.put("enable_",0);
+		db_w.update("table_helper_profile", cv, "", null);
+	}
+	public void enable_helper_profile()
+	{
+		ContentValues cv=new ContentValues();
+		cv.put("enable_",1);
+		db_w.update("table_helper_profile", cv, "", null);
 	}
 	public void set_dnd()
 	{
@@ -100,4 +112,25 @@ public class Db_functions {
 		cv.put("accuracy",val);
 		db_w.update("table_prev_login",cv,"",null);
 	}
+
+
+
+	/*public Cursor read_table_contacts()
+	{
+		Cursor cursor=null;
+		cursor=db_r.rawQuery("select * from table_contacts;", null);
+
+		return cursor;
+	}
+	public void delete_table_contacts()
+	{
+		db_w.delete("table_contacts", null, null);
+	}
+	public void insert_into_table_contact(String name,String phone)
+	{
+		ContentValues cv=new ContentValues();
+		cv.put("name",name);
+		cv.put("phone", phone);
+		db_w.insert("table_contacts", null, cv);
+	}*/
 }
