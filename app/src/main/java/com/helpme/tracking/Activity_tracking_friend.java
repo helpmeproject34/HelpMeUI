@@ -3,10 +3,12 @@ package com.helpme.tracking;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -15,19 +17,17 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.helpme.alert_dialogs.Alert_ok;
+import com.helpme.bimaps.Bitmap_editor;
 import com.helpme.friends.Class_check_tracking;
 import com.helpme.groups.Class_locations;
 import com.helpme.helpmeui.R;
 import com.helpme.json.Response;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-public class Activity_tracking_friend extends FragmentActivity implements OnMapReadyCallback {
+public class Activity_tracking_friend extends ActionBarActivity implements OnMapReadyCallback {
 
 	Bundle bundle;
 	String var_friend_name;
@@ -39,14 +39,20 @@ public class Activity_tracking_friend extends FragmentActivity implements OnMapR
 	boolean destroyed;
 	Handler handler;
 	private GoogleMap mMap=null;
-	DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
-
+	Alert_ok alert;
 	Thread t;
+
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+		getSupportActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+
 		Intent var_intent_received=getIntent();
 		 if(var_intent_received==null||var_intent_received.getExtras()==null)
 		 {
@@ -55,8 +61,6 @@ public class Activity_tracking_friend extends FragmentActivity implements OnMapR
 		 }
 		 else
 		 {
-
-
 			 bundle=var_intent_received.getExtras();
 			 var_username=bundle.getString("username");
 			 var_phone=bundle.getString("phone");
@@ -66,7 +70,9 @@ public class Activity_tracking_friend extends FragmentActivity implements OnMapR
 			 context=this;
 			 handler=new Handler();
 
+
 		 }
+		getSupportActionBar().setTitle("Tracking "+var_friend_name);
 		if(services_ok())
 		{
 			setContentView(R.layout.fragment_tracking_friend);
@@ -76,12 +82,10 @@ public class Activity_tracking_friend extends FragmentActivity implements OnMapR
 		}
 		else
 		{
+			Toast.makeText(getApplicationContext(),"Your device don't have google play services.Please install",Toast.LENGTH_SHORT).show();
 			finish();
-			//setContentView(R.layout.activity_tracking_friend);
+
 		}
-
-
-		 
 	}
 	@Override
 	protected void onDestroy() {
@@ -160,13 +164,26 @@ public class Activity_tracking_friend extends FragmentActivity implements OnMapR
 									{
 										Double latitude= location.latitude;
 										Double longitude= location.longitude;
-
+										if(latitude==-1&&longitude==-1)
+										{
+											mMap.clear();
+											if(alert==null)
+											{
+												alert=new Alert_ok();
+												Alert_ok.show(Activity_tracking_friend.this,"Location unavailable\nSuggest your friend to turn on GPS.");
+											}
+											Toast.makeText(Activity_tracking_friend.this,"Suggest your friend to turn on GPS.",Toast.LENGTH_SHORT).show();
+										}
+										else
+										{
+											alert=null;
+											mMap.clear();
+											LatLng sydney = new LatLng(latitude,longitude);
+											mMap.addMarker(new MarkerOptions().position(sydney).title("Last seen time:").snippet(location.last_updated).icon(BitmapDescriptorFactory.fromBitmap(Bitmap_editor.drawTextToBitmap(getApplicationContext(), R.drawable.marker_tracking, " " + var_friend_name + " "))));
+											mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 18.0f));
+										}
 										// Add a marker in Sydney and move the camera
-										mMap.clear();
 
-										LatLng sydney = new LatLng(latitude,longitude);
-										mMap.addMarker(new MarkerOptions().position(sydney).title(df.format(Calendar.getInstance().getTime())));
-										mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 18.0f));
 									}
 									catch(Exception e)
 									{
@@ -184,7 +201,8 @@ public class Activity_tracking_friend extends FragmentActivity implements OnMapR
 							}
 							else if(result.value==-1)
 							{
-								Alert_ok.show(context, result.message);
+								//Alert_ok.show(context, result.message);
+								Toast.makeText(context,result.message,Toast.LENGTH_SHORT).show();
 								finish();
 							}
 							
@@ -197,9 +215,17 @@ public class Activity_tracking_friend extends FragmentActivity implements OnMapR
 		t.start();
 	}
 	@Override
+	 public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_refresh, menu);
+		//getMenuInflater().inflate(R.menu.menu_refresh, menu);
 		return true;
 	}
 	private boolean services_ok()

@@ -26,7 +26,7 @@ public class Activity_helper extends Activity {
     Double latitude;
     Double longitude;
     Thread t;
-    String postal_code;
+    //String postal_code;
     com.helpme.widgets.SAutoBgButton helper[]=new com.helpme.widgets.SAutoBgButton[NUM_HELPERS+1];
    /* com.helpme.widgets.SAutoBgButton helper_1;
     com.helpme.widgets.SAutoBgButton helper_2;
@@ -86,8 +86,6 @@ public class Activity_helper extends Activity {
     }
     private void call_map(int val)
     {
-
-
         if(latitude==null||longitude==null)
         {
             get_location( val);
@@ -112,7 +110,7 @@ public class Activity_helper extends Activity {
         Bundle bundle=new Bundle();
         bundle.putDouble("latitude",latitude);
         bundle.putDouble("longitude",longitude);
-        bundle.putString("postal_code", Class_get_location.postal_code);
+        //bundle.putString("postal_code",postal_code);
         bundle.putInt("category", val);
         i.putExtras(bundle);
         startActivity(i);
@@ -160,6 +158,7 @@ public class Activity_helper extends Activity {
             {
                 dialog=new ProgressDialog(Activity_helper.this,R.style.DialogTheme);
                 dialog.setCanceledOnTouchOutside(false);
+                dialog.setCancelable(false);
                 dialog.setMessage("please wait.....");
                 dialog.show();
                 return ;
@@ -167,6 +166,7 @@ public class Activity_helper extends Activity {
         }
         dialog=new ProgressDialog(Activity_helper.this,R.style.DialogTheme);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
         dialog.setMessage("detecting your location.....");
         dialog.show();
         t=new Thread(new Runnable() {
@@ -180,15 +180,15 @@ public class Activity_helper extends Activity {
                         {
                             dialog.dismiss();
                         }
-                        postal_code=Class_get_location.postal_code;
-                        if(postal_code==null)
+                        //postal_code=Class_get_location.postal_code;
+                        /*if(postal_code==null)
                         {
                             Alert_ok.show(Activity_helper.this,"Your internet connection is also required to get address");
                             latitude=null;
                             longitude=null;
-                        }
-                        else
-                        {
+                        }*/
+                        //else
+                       // {
                             if(loc!=null)
                             {
                                 latitude=loc.latitude;
@@ -203,7 +203,7 @@ public class Activity_helper extends Activity {
                                 longitude=null;
                                 Toast.makeText(getApplicationContext(),"Failed to get location.Try again",Toast.LENGTH_SHORT).show();
                             }
-                        }
+                       // }
 
 
 

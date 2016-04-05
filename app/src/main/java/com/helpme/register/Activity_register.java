@@ -35,6 +35,7 @@ public class Activity_register extends Activity {
     String var_phone;
     ProgressDialog dialog;
     Handler handler;
+    Thread t;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -62,6 +63,7 @@ public class Activity_register extends Activity {
             public void onClick(View v) {
                 Intent i=new Intent(Activity_register.this, Activity_login.class);
                 startActivity(i);
+                finish();
             }
         });
         var_button_register.setOnClickListener(new View.OnClickListener() {
@@ -73,8 +75,10 @@ public class Activity_register extends Activity {
                 var_password=var_edittext_password.getText().toString();
                 var_confirm_password=var_edittext_confirm_password.getText().toString();
                 dialog=new ProgressDialog(Activity_register.this,R.style.DialogTheme);
+                dialog.setCancelable(false);
                 dialog.setCanceledOnTouchOutside(false);
-                dialog.setMessage("Loading.....");
+                dialog.setMessage("Register in progress.....");
+
                 dialog.show();
                 if(check(var_username, var_email, var_phone, var_password, var_confirm_password))
                 {
@@ -128,7 +132,21 @@ public class Activity_register extends Activity {
     }
     private void add_data_to_server()
     {
-        Thread t=new Thread(new Runnable() {
+        if(t!=null)
+        {
+            if(t.isAlive())
+            {
+                if(dialog!=null)
+                {
+                    if(dialog.isShowing())
+                    {
+                        dialog.dismiss();
+                    }
+                }
+                return;
+            }
+        }
+        t=new Thread(new Runnable() {
 
             @Override
             public void run() {

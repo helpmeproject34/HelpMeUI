@@ -13,7 +13,7 @@
         android:icon="@drawable/plus"
         android:showAsAction="ifRoom"
         android:visible="true"
-        android:title="New Group"
+        android:title="Add new person"
         android:enabled="true"/>
 
     <item
@@ -21,6 +21,6 @@
         android:icon="@drawable/world_map"
         android:showAsAction="ifRoom"
         android:visible="true"
-        android:title="New Group"
+        android:title="Show on map"
         android:enabled="true"/>
 </menu>

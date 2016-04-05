@@ -40,6 +40,7 @@ public class Activity_edit_profiles extends ActionBarActivity {
         }
         var_username=bundle.getString("username");
         var_phone=bundle.getString("phone");
+
     }
     private void load_objects()
     {

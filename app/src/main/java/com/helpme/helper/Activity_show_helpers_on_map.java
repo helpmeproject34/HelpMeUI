@@ -1,12 +1,19 @@
 package com.helpme.helper;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -18,24 +25,19 @@ import com.helpme.helpmeui.R;
 import com.helpme.json.Response;
 import com.helpme.profiles.Class_profile_object;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Activity_show_helpers_on_map extends FragmentActivity implements OnMapReadyCallback,GoogleMap.OnMarkerClickListener {
+public class Activity_show_helpers_on_map extends ActionBarActivity implements OnMapReadyCallback,GoogleMap.OnMarkerClickListener {
 
     Bundle bundle;
-    String var_username;
-    String var_phone;
     Context context;
     boolean destroyed;
     Handler handler;
     private GoogleMap mMap=null;
-    DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
     private Double var_my_latitude;
     private Double var_my_longitude;
-    private String postal_code;
+
     private int category;
     HashMap<String,Class_profile_object> hash_map=new HashMap<>();
     Thread t;
@@ -44,19 +46,10 @@ public class Activity_show_helpers_on_map extends FragmentActivity implements On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(services_ok())
-        {
-            setContentView(R.layout.fragment_show_helpers);
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.fragment_show_helpers);
-            mapFragment.getMapAsync(this);
-        }
-        else
-        {
-            finish();
-
-        }
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        getSupportActionBar().setTitle("Helpers in your locality");
         Intent var_intent_received=getIntent();
         if(var_intent_received==null||var_intent_received.getExtras()==null)
         {
@@ -83,7 +76,7 @@ public class Activity_show_helpers_on_map extends FragmentActivity implements On
             {
                 var_my_latitude=bundle.getDouble("latitude");
                 var_my_longitude=bundle.getDouble("longitude");
-                postal_code=bundle.getString("postal_code");
+
                 category=bundle.getInt("category");
             }
             catch(Exception e)
@@ -93,8 +86,31 @@ public class Activity_show_helpers_on_map extends FragmentActivity implements On
             context=this;
             handler=new Handler();
         }
+        if(services_ok())
+        {
+            setContentView(R.layout.fragment_show_helpers);
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_show_helpers);
+            mapFragment.getMapAsync(this);
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),"Your device don't have google play services.Please install",Toast.LENGTH_SHORT).show();
+            finish();
 
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
     @Override
     protected void onDestroy() {
@@ -131,11 +147,12 @@ public class Activity_show_helpers_on_map extends FragmentActivity implements On
         t=new Thread(new Runnable() {
             @Override
             public void run() {
-                final Response result=Class_get_helpers.get(helper_objects,postal_code,category);
+                final Response result=Class_get_helpers.get(helper_objects,category,var_my_latitude,var_my_longitude);
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(),result.message,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),result.message,Toast.LENGTH_SHORT).show();
+                        Alert_ok.show(Activity_show_helpers_on_map.this,result.message);
                         mMap.clear();
                         for(int i=0;i<helper_objects.size();i++)
                         {
@@ -155,8 +172,8 @@ public class Activity_show_helpers_on_map extends FragmentActivity implements On
 
     private boolean services_ok()
     {
-        return true;
-      /*  boolean result=false;
+
+       boolean result=false;
         int isavail= GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
         if(isavail== ConnectionResult.SUCCESS)
         {
@@ -171,13 +188,15 @@ public class Activity_show_helpers_on_map extends FragmentActivity implements On
         {
             Alert_ok.show(getApplicationContext(), "Google play services are not availabe");
         }
-        return result;*/
+        return result;
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(this, "maps ready", Toast.LENGTH_SHORT).show();
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
+        Toast.makeText(this,"Zooming into your location...",Toast.LENGTH_SHORT).show();
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(var_my_latitude,var_my_longitude), 14.0f));
     }
 
     @Override

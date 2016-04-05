@@ -129,11 +129,9 @@ public class Activity_helper_profile extends ActionBarActivity {
             public void onClick(View v) {
                 if (switch_.isChecked()) {
                     switch_.setChecked(false);
-
                     enable_helper_profile();
                 } else {
                     switch_.setChecked(true);
-
                     disable_helper_profile();
                 }
             }
@@ -354,12 +352,12 @@ public class Activity_helper_profile extends ActionBarActivity {
             detect_location.setError("Set your current location here");
             result=false;
         }
-        if(Class_get_location.postal_code==null)
+        /*if(Class_get_location.postal_code==null)
         {
             Toast.makeText(getApplicationContext(),"Postal code not detected",Toast.LENGTH_SHORT).show();
             Alert_ok.show(this,"Postal code not detected.Turn on GPS and internet connection and set your location again");
             result=false;
-        }
+        }*/
         return result;
     }
     private void save()
@@ -396,7 +394,7 @@ public class Activity_helper_profile extends ActionBarActivity {
         t=new Thread(new Runnable() {
             @Override
             public void run() {
-               final  Response result=Class_save_helper_profile.save(object,Class_get_location.postal_code);
+               final  Response result=Class_save_helper_profile.save(object);
                handler.post(new Runnable() {
                    @Override
                    public void run() {
@@ -539,11 +537,29 @@ public class Activity_helper_profile extends ActionBarActivity {
     }
     private void enable_all_views()
     {
-        layout.setVisibility(View.VISIBLE);
+
+        int len=layout.getChildCount();
+        for(int i=0;i<len;i++)
+        {
+            layout.getChildAt(i).setEnabled(true);
+            layout.getChildAt(i).setVisibility(View.VISIBLE);
+        }
+        layout.setVisibility(LinearLayout.VISIBLE);
+        layout.requestLayout();
+
+
     }
     private void disable_all_views()
     {
-        layout.setVisibility(View.GONE);
+
+        int len=layout.getChildCount();
+        for(int i=0;i<len;i++)
+        {
+            layout.getChildAt(i).setEnabled(false);
+            layout.getChildAt(i).setVisibility(View.GONE);
+        }
+        layout.setVisibility(LinearLayout.GONE);
+        layout.requestLayout();
     }
 
 }

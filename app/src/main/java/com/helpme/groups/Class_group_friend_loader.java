@@ -1,5 +1,7 @@
 package com.helpme.groups;
 
+import android.util.Log;
+
 import com.helpme.json.Class_server_details;
 import com.helpme.json.JSONParser;
 import com.helpme.json.Response;
@@ -19,7 +21,7 @@ public class Class_group_friend_loader {
 	{
 		Response result=new Response();
 		result.bool=false;
-		
+		result.value=0;
 		if(Class_server_details.server_on==1)
 		{
 			friends_objects.clear();
@@ -32,21 +34,30 @@ public class Class_group_friend_loader {
 				String response=json.getString("success");
 	        	String[] comma_sep=response.split(",");
 	        	int len=comma_sep.length;
+				result.value=-1;
 	        	for(int j=0;j<len;j++)
 	        	{
 	        		String[] split=comma_sep[j].split(";");
 	        		if(split.length!=5)
 	        		{
 	        			friends_objects.add(new Class_group_object(split[0],"split 1","split 2"));
+						result.value=-1;
+						result.bool=false;
 	        		}
 	        		else
 	        		{
+						if(username.equals(split[0]))
+						{
+							Log.e("username_matched", split[0]);
+							result.value=0;
+							result.bool=true;
+						}
 	        			friends_objects.add(new Class_group_object(split[0],split[1],split[2]));
 
 	        		}
 
 	        	}
-				result.bool=true;
+
 	        	
 			} catch (JSONException e) {
 				//Log.d("exception", "json exception from group_friend_loader " + e.getMessage());

@@ -12,7 +12,9 @@
         android:paddingTop="26dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:background="@drawable/login_background"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:background="@color/background_color"
         >
 
         <ImageView android:src="@drawable/logo_big"
@@ -54,6 +56,20 @@
             android:ems="10"
             android:textColor="@color/colorPrimaryDark"
             android:id="@+id/edittext_register_phone" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Email"
+            android:id="@+id/textView6" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/edittext_register_email" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -85,20 +101,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:id="@+id/edittext_register_repeatpassword" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Email"
-            android:id="@+id/textView6" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:textColor="@color/colorPrimaryDark"
-            android:id="@+id/edittext_register_email" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_register_register"

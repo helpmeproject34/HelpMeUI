@@ -130,6 +130,7 @@ public class Activity_showfriends extends Activity {
 
                 dialog=new ProgressDialog(Activity_showfriends.this,R.style.DialogTheme);
                 dialog.setCanceledOnTouchOutside(false);
+                dialog.setCancelable(false);
                 dialog.setMessage("Checking for blocked status.....");
                 dialog.show();
 
@@ -237,6 +238,7 @@ public class Activity_showfriends extends Activity {
         adapter_friends.notifyDataSetChanged();
         dialog=new ProgressDialog(Activity_showfriends.this,R.style.DialogTheme);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
         dialog.setMessage("Loading contacts.....");
         dialog.show();
         final ContentResolver resolver=getContentResolver();

@@ -36,6 +36,7 @@ public class Activity_welcome extends Activity {
     Switch var_switch_dnd;
     String var_username;
     String var_phone;
+
    // RelativeLayout var_relative_layout;
     //Adapter_welcome adapter_welcome;
    //TextView var_welcome_textview;
@@ -68,6 +69,21 @@ public class Activity_welcome extends Activity {
         getMenuInflater().inflate(R.menu.menu_welcome, menu);
         return true;
     }
+
+    @Override
+    public void onBackPressed() {
+
+        Alert_ok alert=new Alert_ok()
+        {
+            @Override
+            public void ontrue()
+            {
+                Activity_welcome.super.onBackPressed();
+            }
+        };
+        alert.ok_or_cancel(this, "", "Are sure to leave the app?");
+    }
+
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item)
     {
@@ -122,6 +138,8 @@ public class Activity_welcome extends Activity {
         else if(item.getItemId()==android.R.id.home)
         {
             onBackPressed();
+
+
         }
         return super.onMenuItemSelected(featureId, item);
     }
@@ -149,6 +167,7 @@ public class Activity_welcome extends Activity {
             Bundle bundle=intent.getExtras();
             var_username=bundle.getString("username");
             var_phone=bundle.getString("phone");
+
         }
     }
     private  void load_all_objects()

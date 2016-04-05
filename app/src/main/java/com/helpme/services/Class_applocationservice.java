@@ -41,6 +41,7 @@ public class Class_applocationservice extends Service implements LocationListene
 	private long MIN_TIME_FOR_UPDATE = 1000;
 	Handler handler;
 	Thread t;
+	NotificationManager notification_manager;
 	public Class_applocationservice () {
 
 	}
@@ -63,16 +64,22 @@ public class Class_applocationservice extends Service implements LocationListene
 		{
 			locationManager.removeUpdates(this);
 		}
+		if(notification_manager!=null)
+		{
+			notification_manager.cancel(1);
+		}
 		stopSelf();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
+		notification_manager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 		if(Class_db_values_settings.is_dnd(getApplicationContext()))
 		{
 			stopSelf();
 		}
+
 		int accuracy=Class_db_values_settings.give_accuracy(getApplicationContext());
 		if(accuracy==1)
 		{
@@ -105,8 +112,46 @@ public class Class_applocationservice extends Service implements LocationListene
 		crit.setAccuracy(Criteria.ACCURACY_FINE);
 		String best = locationManager.getBestProvider(crit, false);
 		locationManager.requestLocationUpdates(best, MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
+
+		send_immediate_location();
 		return super.onStartCommand(intent, flags, startId);
 		//return START_REDELIVER_INTENT;
+	}
+
+	private void send_immediate_location()
+	{
+
+		Thread t2=new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Location loc=null;
+				int count=3;
+				while(loc==null||count!=0)
+				{
+					loc=getLocation();
+					if(loc!=null)
+					{
+						count--;
+						send(loc);
+					}
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+
+					}
+
+				}
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getApplicationContext(), "Immediate location sent", Toast.LENGTH_SHORT).show();
+					}
+				});
+
+
+			}
+		});
+		t2.start();
 	}
 
 	public Location getLocation() {
@@ -298,7 +343,7 @@ public class Class_applocationservice extends Service implements LocationListene
 			NotificationCompat.Builder builder=new NotificationCompat.Builder(this);
 			builder.setSmallIcon(R.drawable.logo_big);
 			builder.setContentTitle("HELP ME !!");
-			builder.setContentText("tracing your location\n"+"min-dist:"+MIN_DISTANCE_FOR_UPDATE+"\nmin-time:"+MIN_TIME_FOR_UPDATE);
+			builder.setContentText("Tracing your location");
 			//Intent resultIntent=new Intent(getApplicationContext(),Activity_welcome.class);
 			//TaskStackBuilder stackBuilder=TaskStackBuilder.create(getApplicationContext());
 			//stackBuilder.addParentStack(Activity_login.class);
@@ -310,12 +355,12 @@ public class Class_applocationservice extends Service implements LocationListene
 
 			Intent intent = new Intent(getApplicationContext(), Activity_settings.class);
 			intent.putExtra("username", Class_alreadyLogin.username);
-			intent.putExtra("phone",Class_alreadyLogin.phone);
+			intent.putExtra("phone", Class_alreadyLogin.phone);
 			final PendingIntent pendingIntent = PendingIntent.getActivities(getApplicationContext(), 2,
 					new Intent[] {backIntent}, PendingIntent.FLAG_ONE_SHOT);
 			builder.setContentIntent(pendingIntent);
-			NotificationManager manager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-			manager.notify(1,builder.build());
+			builder.setOngoing(true);
+			notification_manager.notify(1,builder.build());
 		}
 
 

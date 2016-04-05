@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:id="@+id/scrollView"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/login_background"
+        android:background="@color/background_color"
         android:fillViewport="false">
         <LinearLayout
             android:orientation="vertical"
@@ -23,7 +23,7 @@
                 android:id="@+id/relative_layout_welcome"
                 android:paddingBottom="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/welcome_background_1"
+                android:background="#ffffff"
 
                 >
 

@@ -47,6 +47,8 @@ public class Class_locations_provider {
 	        		{
 						latitude=Double.parseDouble(split[2]);
 						longitude=Double.parseDouble(split[3]);
+						split[4]=split[4].split("\\.")[0];
+						split[4]=split[4].split("\\+")[0];
 	        			locations.add(new Class_locations(split[0],split[1],latitude,longitude,split[4]));
 	        			if(split[0].equals(username))
 	        			{
@@ -63,6 +65,7 @@ public class Class_locations_provider {
 	        	
 			} catch (JSONException e1) {
 				//Log.d("exception", "json exception from location provider");
+
 				
 			}
 	        catch(NullPointerException e)

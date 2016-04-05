@@ -110,6 +110,7 @@ public class Activity_show_groups extends Activity {
 		clean();
 		dialog=new ProgressDialog(Activity_show_groups.this,R.style.DialogTheme);
 		dialog.setCanceledOnTouchOutside(false);
+		dialog.setCancelable(false);
 		dialog.setMessage("Loading groups.....");
 		dialog.show();
 		adapter.arraylist.clear();
@@ -302,6 +303,7 @@ public class Activity_show_groups extends Activity {
 		}
 		dialog=new ProgressDialog(Activity_show_groups.this,R.style.DialogTheme);
 		dialog.setCanceledOnTouchOutside(false);
+		dialog.setCancelable(false);
 		dialog.setMessage("Adding new group.....");
 		dialog.show();
 
@@ -325,6 +327,8 @@ public class Activity_show_groups extends Activity {
 							adapter.arraylist.clear();
 							adapter.notifyDataSetChanged();
 							add_button();
+							dialog.dismiss();
+							load_group_names();
 
 						}
 						else

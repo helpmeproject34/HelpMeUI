@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.helpme.after_login.Activity_welcome;
+import com.helpme.alert_dialogs.Alert_ok;
 import com.helpme.databases.Db_functions;
 import com.helpme.json.Response;
 import com.helpme.register.Activity_register;
@@ -31,6 +32,8 @@ public class Activity_login extends Activity {
     String var_username;
     String var_phone;
     String var_password;
+    Thread t;
+    TextView var_text_view_forgot_password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +41,6 @@ public class Activity_login extends Activity {
         verify_for_previous_login();
         load_all_objects();
         register_for_clicks();
-
-
-
     }
     private void verify_for_previous_login()
     {
@@ -51,6 +51,7 @@ public class Activity_login extends Activity {
             Intent intent_welcome=new Intent(Activity_login.this.getApplicationContext(),Activity_welcome.class);
             intent_welcome.putExtra("username", Class_alreadyLogin.username);
             intent_welcome.putExtra("phone", Class_alreadyLogin.phone);
+
             startActivity(intent_welcome);
             finish();
         }
@@ -63,6 +64,7 @@ public class Activity_login extends Activity {
         var_textview_phone=(EditText)findViewById(R.id.edittext_login_phone);
         var_register=(TextView)findViewById(R.id.textview_register);
         var_login_button=(Button)findViewById(R.id.button_login);
+        var_text_view_forgot_password=(TextView)findViewById(R.id.textview_activity_login_forgot_password);
         handler=new Handler();
     }
     private void register_for_clicks()
@@ -73,6 +75,7 @@ public class Activity_login extends Activity {
             public void onClick(View v) {
                 Intent i=new Intent(Activity_login.this, Activity_register.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -95,6 +98,20 @@ public class Activity_login extends Activity {
                 }
 
 
+            }
+        });
+        var_text_view_forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Alert_ok alert=new Alert_ok()
+                {
+                    @Override
+                    public void ontrue(String name) {
+                        name=name.trim();
+                        forgot_password(name);
+                    }
+                };
+                alert.forgot_password_popup(Activity_login.this,"CANCEL","OK");
             }
         });
 
@@ -134,8 +151,15 @@ public class Activity_login extends Activity {
     }
     private void verify_details()
     {
+        if(t!=null)
+        {
+            if(t.isAlive())
+            {
+                return;
+            }
+        }
 
-        Thread t=new Thread(new Runnable() {
+        t=new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -201,5 +225,39 @@ public class Activity_login extends Activity {
         funcs.write_table_prev_login(username, phone,dnd,accuracy);
         funcs.close_all();
     }
+
+    private void forgot_password(final String email)
+    {
+        if(t!=null)
+        {
+            if(t.isAlive())
+            {
+                return;
+            }
+        }
+        dialog=new ProgressDialog(Activity_login.this,R.style.DialogTheme);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setMessage("Sending you a email.....");
+        dialog.show();
+        t=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Response result=Class_send_email_forgot_password.change(email);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(dialog!=null)
+                        {
+                            dialog.dismiss();
+                        }
+                        Alert_ok.show(Activity_login.this,result.message);
+                    }
+                });
+            }
+        });
+        t.start();
+    }
+
 
 }

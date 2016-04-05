@@ -1,5 +1,7 @@
 package com.helpme.helper;
 
+import android.util.Log;
+
 import com.helpme.json.Class_server_details;
 import com.helpme.json.JSONParser;
 import com.helpme.json.Response;
@@ -19,24 +21,27 @@ import java.util.List;
  */
 public class Class_get_helpers {
     static JSONParser parser = new JSONParser();
-    public static Response get(ArrayList<Class_profile_object>helper_objects,String postal_code,int category)
+    public static Response get(ArrayList<Class_profile_object>helper_objects,int category,Double my_latitude,Double my_longitude)
     {
         Response result=new Response();
         result.bool=false;
         result.message="no message";
+        result.value=-1;
+        JSONArray array=null;
         if(Class_server_details.server_on==1)
         {
             String url=Class_server_details.server_ip+"/helper/find_helper";
             List<NameValuePair> params=new ArrayList<>();
 
-            params.add(new BasicNameValuePair("postal_code",postal_code));
+            params.add(new BasicNameValuePair("latitude",my_latitude+""));
+            params.add(new BasicNameValuePair("longitude",my_longitude+""));
             params.add(new BasicNameValuePair("category",category+""));
 
             try
             {
                 JSONObject json = parser.makeHttpRequest(url, "POST", params);
                 String response=json.getString("success");
-                JSONArray array=json.getJSONArray("helper_array");
+                 array=json.getJSONArray("helper_array");
                 for(int i=0;i<array.length();i++)
                 {
                     JSONObject obj=array.getJSONObject(i);
@@ -55,7 +60,7 @@ public class Class_get_helpers {
                if(response.equals("True"))
                {
                    result.bool=true;
-                   result.message="Successfully retrieved all helpers";
+                   result.message="Successfully retrieved "+array.length()+" users";
                }
                 else
                {
@@ -65,12 +70,22 @@ public class Class_get_helpers {
                 if(array.length()==0)
                 {
                     result.message="NO HELPERS FOUND IN YOUR LOCALITY !!";
+                    result.value=0;
                 }
 
             }
             catch(JSONException e)
             {
                 result.message="Json exception occured"+e.getMessage();
+                if(array!=null)
+                {
+                    Log.e("helper", array.toString());
+                }
+                else
+                {
+                    Log.e("helper", "null array");
+                }
+
             }
             catch(NullPointerException e)
             {

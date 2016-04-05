@@ -1,14 +1,17 @@
 package com.helpme.groups;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -20,7 +23,7 @@ import com.helpme.json.Response;
 
 import java.util.ArrayList;
 
-public class Activity_show_people extends FragmentActivity implements OnMapReadyCallback {
+public class Activity_show_people extends ActionBarActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     Handler handler;
@@ -34,9 +37,14 @@ public class Activity_show_people extends FragmentActivity implements OnMapReady
     Thread updating_thread;
     int imp_value;
     boolean activity_visible;
+    Alert_ok alert;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 
         Intent intent_recieved= getIntent();
         Bundle bundle=null ;
@@ -61,52 +69,70 @@ public class Activity_show_people extends FragmentActivity implements OnMapReady
             var_group_name=bundle.getString("group_name");
             var_admin_username=bundle.getString("group_admin_username");
             var_admin_phone=bundle.getString("group_admin_phone");
-            setTitle(var_group_name+" on Map");
+
             handler=new Handler();
            start_refresh_thread(10000);
           //
 
         }
+        getSupportActionBar().setTitle(var_group_name);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-    }
 
+        if(services_ok())
+        {
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),"Your device don't have google play services.Please install",Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_show_group_people, menu);
 
         return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onStart() {
 
         super.onStart();
     }
 
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
-        if(item.getItemId()==R.id.action_group_people)
-        {
+    private boolean services_ok()
+    {
 
-        }
-        if(item.getItemId()==android.R.id.home)
+        boolean result=false;
+        int isavail= GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if(isavail== ConnectionResult.SUCCESS)
         {
-            finish();
+            result=true;
         }
-        return super.onMenuItemSelected(featureId, item);
+        else if(GooglePlayServicesUtil.isUserRecoverableError(isavail))
+        {
+            Dialog dialog= GooglePlayServicesUtil.getErrorDialog(isavail, this, 9001);
+            dialog.show();
+        }
+        else
+        {
+            Alert_ok.show(this, "Google play services are not availabe");
+        }
+        return result;
     }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-
     }
     private void start_refresh_thread(final int time)
     {
@@ -146,6 +172,7 @@ public class Activity_show_people extends FragmentActivity implements OnMapReady
                             @Override
                             public void run() {
                                 //////////////////////////////////////////
+                                String unlocated_people="Locations are unavailable for :";
                                 int length=all_locations.size();
                                 LatLng loc=new LatLng(-1,-1);
                                 mMap.clear();
@@ -153,12 +180,18 @@ public class Activity_show_people extends FragmentActivity implements OnMapReady
                                 {
                                     if(all_locations.get(i).latitude==-1&&all_locations.get(i).longitude==-1)
                                     {
+                                        unlocated_people=unlocated_people+"\n"+all_locations.get(i).username;
                                         continue;
                                     }
                                     loc = new LatLng(all_locations.get(i).latitude,all_locations.get(i).longitude);
-                                    mMap.addMarker(new MarkerOptions().position(loc).title(all_locations.get(i).username));
+                                    mMap.addMarker(new MarkerOptions().position(loc).snippet(all_locations.get(i).last_updated).title(all_locations.get(i).username));
                                 }
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 18.0f));
+                                if(alert==null)
+                                {
+                                    alert=new Alert_ok();
+                                    Alert_ok.show(Activity_show_people.this,unlocated_people);
+                                }
+                               // mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 18.0f));
                                 Toast.makeText(getApplicationContext(), "people's locations are updated now", Toast.LENGTH_SHORT).show();
                                 if(result.value==-2)
                                 {

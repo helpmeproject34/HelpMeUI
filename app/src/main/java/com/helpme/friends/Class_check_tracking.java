@@ -41,6 +41,8 @@ public class Class_check_tracking {
 				Double longitude=json.getDouble("longitude");
 				String last_updated=json.getString("last_updated");
 
+				 last_updated=last_updated.split("\\.")[0];
+				//Log.e("last_updated",last_updated);
 				String friend_username="some username";//json.getString("username");
 				if(response.equals("False")||response.equals("")||response==null)
 				{
@@ -66,12 +68,12 @@ public class Class_check_tracking {
 			}
 	        catch(NullPointerException e)
 	        { 	
-	        	result.message="Unable to connect to server. Please check your network connection \n"+e.getMessage()+"\n"+ Class_server_error_codes.give_error(parser.status_code);
+	        	result.message="Unable to connect to server. Please check your network connection \n"+ Class_server_error_codes.give_error(parser.status_code);
 	        	result.value=0;
 	        }
 	        catch(Exception e)
 	        {
-	        	result.message="Unknown error occured\n"+e.getMessage()+"\n"+ Class_server_error_codes.give_error(parser.status_code);
+	        	result.message="Unknown error occured\n"+"\n"+ Class_server_error_codes.give_error(parser.status_code);
 	        	result.value=0;
 	        }
 		}

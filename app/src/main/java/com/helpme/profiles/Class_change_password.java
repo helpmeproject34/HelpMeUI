@@ -13,34 +13,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by HARINATHKANCHU on 24-03-2016.
+ * Created by HARINATHKANCHU on 27-03-2016.
  */
-public class Class_save_helper_profile {
+public class Class_change_password {
     static JSONParser parser = new JSONParser();
-    public static Response save(Class_profile_object object)
+    public static Response change(String current_password,String new_password,String username)
     {
         Response result=new Response();
         result.bool=false;
         result.message="no message";
         if(Class_server_details.server_on==1)
         {
-            String url=Class_server_details.server_ip+"/helper/profile";
+            String url=Class_server_details.server_ip+"/account/changepassword";
             List<NameValuePair> params=new ArrayList<>();
-            params.add(new BasicNameValuePair("username",object.username));
-            params.add(new BasicNameValuePair("working_name",object.working_name));
-            params.add(new BasicNameValuePair("working_mobile",object.working_phone));
-            params.add(new BasicNameValuePair("category",object.category+""));
-            params.add(new BasicNameValuePair("latitude",object.latitude+""));
-            params.add(new BasicNameValuePair("longitude",object.longitude+""));
-            params.add(new BasicNameValuePair("from",object.from+""));
-            params.add(new BasicNameValuePair("to",object.to+""));
-            params.add(new BasicNameValuePair("working_days",object.working_days));
-
-
+            params.add(new BasicNameValuePair("current_password",current_password));
+            params.add(new BasicNameValuePair("new_password",new_password));
+            params.add(new BasicNameValuePair("username",username));
             try
             {
                 JSONObject json = parser.makeHttpRequest(url, "POST", params);
                 String response=json.getString("success");
+                String message=json.getString("message");
                 if(response.equals("True"))
                 {
                     result.message="Successfully saved your details";
@@ -48,10 +41,10 @@ public class Class_save_helper_profile {
                 }
                 else
                 {
-                    result.message="Not saved your details";
+                    result.message="Password change failed";
                     result.bool=false;
                 }
-
+                result.message=message;
 
             }
             catch(JSONException e)

@@ -95,6 +95,10 @@ public class Alert_ok {
 	{
 
 	}
+	public void ontrue(String current_password,String new_password)
+	{
+
+	}
 	public void new_group_input(Context context,String left,String right)
 	{
 
@@ -131,5 +135,90 @@ public class Alert_ok {
 
 		dialog.show();
 	}
-	
+	public void forgot_password_popup(Context context,String left,String right)
+	{
+		final Dialog dialog=new Dialog(context);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//dialog.setTitle("Enter your email to get new password");
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.setContentView(R.layout.dialog_forgot_password);
+		//dialog.setTitle(title);
+		final EditText tv=(EditText)dialog.findViewById(R.id.edittext_dialog_forgot_password_input);
+		tv.setText("");
+		com.helpme.widgets.SAutoBgButton left_button=(com.helpme.widgets.SAutoBgButton)dialog.findViewById(R.id.button_dialog_forgot_password_cancel);
+		left_button.setText(left);
+		left_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				dialog.dismiss();
+				onfalse();
+
+			}
+		});
+		com.helpme.widgets.SAutoBgButton right_button=(com.helpme.widgets.SAutoBgButton)dialog.findViewById(R.id.button_dialog_forgot_password_ok);
+		right_button.setText(right);
+		right_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				dialog.dismiss();
+				ontrue(tv.getEditableText().toString());
+
+
+			}
+		});
+
+		dialog.show();
+	}
+	public void change_password(final Context context,String left,String right)
+	{
+		final Dialog dialog=new Dialog(context);
+		//dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//dialog.setTitle("Enter your email to get new password");
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.setContentView(R.layout.dialog_change_password);
+		//dialog.setTitle(title);
+		final EditText editext_current_password=(EditText)dialog.findViewById(R.id.edittext_dialog_change_password_current);
+		final EditText editext_new_password=(EditText)dialog.findViewById(R.id.edittext_dialog_change_password_new);
+		final EditText editext_repeat_password=(EditText)dialog.findViewById(R.id.edittext_dialog_change_password_repeat);
+
+
+
+		com.helpme.widgets.SAutoBgButton left_button=(com.helpme.widgets.SAutoBgButton)dialog.findViewById(R.id.button_change_password_cancel);
+		left_button.setText(left);
+		left_button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				dialog.dismiss();
+				onfalse();
+
+			}
+		});
+
+		com.helpme.widgets.SAutoBgButton right_button=(com.helpme.widgets.SAutoBgButton)dialog.findViewById(R.id.button_change_password_ok);
+		right_button.setText(right);
+		right_button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				dialog.dismiss();
+
+
+				final String current_password=editext_current_password.getEditableText().toString().trim();
+				final String new_password=editext_new_password.getEditableText().toString().trim();
+				final String repeat_password=editext_repeat_password.getEditableText().toString().trim();
+
+				if (repeat_password.equals(new_password)) {
+					//Toast.makeText(context,"new password is "+new_password,Toast.LENGTH_SHORT).show();
+					ontrue(current_password, new_password);
+				} else {
+					ontrue("New Passwords does not match.");
+				}
+			}
+		});
+
+		dialog.show();
+	}
+
 }

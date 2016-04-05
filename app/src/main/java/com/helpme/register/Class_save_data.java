@@ -37,11 +37,8 @@ public class Class_save_data {
 				int result_code=-1;
 				try {
 					result= parser.makeHttpRequest(url, "POST", params);
-					
-					
-						//result_code=result.getInt("status");
+
 						String message=result.getString("message");
-						
 						String result_status=result.getString("success");
 						
 						if(result_status.equals("True"))
@@ -73,10 +70,7 @@ public class Class_save_data {
 								}
 								message=message+"mobile exists already";
 							}
-							//Log.d("json",error_object.toString() );
-							
-							//message=message+error_object.getString("email")+"\n"+error_object.getString("username");
-							//Log.d("email",error_object.getString("email"));
+
 							result_code=0;
 						}
 						res.message=message;
@@ -104,26 +98,7 @@ public class Class_save_data {
 					res.bool=false;
 				}
 			}
-			else if(Class_server_details.server_on==0)
-			{
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					
-				}
-				
-				int random=(int)(Math.random()*100);
-				if(random>80)
-				{
-					res.message="without server - success";
-					res.bool=true;
-				}
-				else
-				{
-					res.message="without server - failed";
-					res.bool=false;
-				}
-			}
+
 			return res;
 		}
 }

@@ -18,8 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +46,9 @@ public class Activity_group_people extends Activity {
 	Context this_context;
 	Thread t;
 	AlertDialog dialog;
-	RelativeLayout layout;
+	LinearLayout layout;
+	com.helpme.widgets.SAutoBgButton button_showonmap;
+	com.helpme.widgets.SAutoBgButton button_exit;
 	Bundle bundle;
 	ArrayList<Class_group_object> friends_objects;
 	@Override
@@ -74,7 +76,7 @@ public class Activity_group_people extends Activity {
 	private void load_all_objects()
 	{
 
-		layout=(RelativeLayout)findViewById(R.id.relative_layout_group_people);
+		layout=(LinearLayout)findViewById(R.id.relative_layout_group_people);
 		var_username=bundle.getString("username");
 		var_phone=bundle.getString("phone");
 		var_group_id=bundle.getString("group_id");
@@ -88,6 +90,8 @@ public class Activity_group_people extends Activity {
 		adapter=new Adapter_groups();
 		listview.setAdapter(adapter);
 		friends_objects=new ArrayList<Class_group_object>();
+		button_showonmap=(com.helpme.widgets.SAutoBgButton)findViewById(R.id.button_activity_show_group_people);
+		button_exit=(com.helpme.widgets.SAutoBgButton)findViewById(R.id.button_activity_show_group_people_exit);
 		load_group_people();
 	}
 	private void register_for_clicks()
@@ -101,6 +105,35 @@ public class Activity_group_people extends Activity {
 				itemLongClick(object, index);
 				//Toast.makeText(getApplicationContext(), object.group_name + " long pressed and admin username is " + var_admin_username + "\nadmin phone is " + var_admin_phone, Toast.LENGTH_SHORT).show();
 				return false;
+			}
+		});
+		button_showonmap.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), Activity_show_people.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("username", var_username);
+				bundle.putString("phone", var_phone);
+				bundle.putString("group_name", var_group_name);
+				bundle.putString("group_id", var_group_id);
+				bundle.putString("group_admin_username", var_admin_username);
+				bundle.putString("group_admin_phone", var_admin_phone);
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+		});
+		button_exit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Alert_ok alert=new Alert_ok()
+				{
+					@Override
+					public void ontrue()
+					{
+						delete_group_member(var_phone);
+					}
+				};
+				alert.ok_or_cancel(Activity_group_people.this,"","Are you sure to exit the group??","CANCEL","EXIT");
 			}
 		});
 	}
@@ -189,6 +222,11 @@ public class Activity_group_people extends Activity {
 							dialog.dismiss();
 							Alert_ok.show(Activity_group_people.this,result.message);
 							add_button();
+							if(result.value==-1)
+							{
+								Toast.makeText(getApplicationContext(),"Group no longer exist.",Toast.LENGTH_SHORT).show();
+								finish();
+							}
 						}
 					});
 				}
@@ -266,14 +304,7 @@ public class Activity_group_people extends Activity {
 			@Override
 			public void run() {
 				
-				handler.post(new Runnable() {
-					
-					@Override
-					public void run() {
-						//progressbar.setVisibility(View.VISIBLE);
-						
-					}
-				});
+
 				if(Class_add_new_persorn.add(phone_num, var_group_id)==true)
 				{
 					handler.post(new Runnable() {
@@ -350,7 +381,7 @@ public class Activity_group_people extends Activity {
 	                			public void ontrue() {
 	                				
 	                				super.ontrue();
-	                				delete_group_member(object,index);
+	                				delete_group_member(object.total_numbers);
 	                			}
 	                		};
 	                		alert.ok_or_cancel(this_context, "", "Are you sure to remove from group");
@@ -367,16 +398,16 @@ public class Activity_group_people extends Activity {
 	        AlertDialog alert = builder.create();
 	        alert.show();
 	}
-	private void delete_group_member(final Class_group_object object,final int index)
+	private void delete_group_member(final String phone)
 	{
 		//final Response result;
 		//progressbar.setVisibility(View.VISIBLE);
-		Toast.makeText(getApplicationContext(), "removing " + object.total_numbers + " from " + var_group_id, Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "removing " + object.total_numbers + " from " + var_group_id, Toast.LENGTH_SHORT).show();
 		Thread t=new Thread(new Runnable() {
 			Response result;
 			@Override
 			public void run() {
-				 result=Class_delete_groupmember.delete(var_group_id,object.total_numbers);	
+				 result=Class_delete_groupmember.delete(var_group_id,phone);
 				
 				handler.post(new Runnable() {
 					
@@ -384,12 +415,17 @@ public class Activity_group_people extends Activity {
 					public void run() {
 						if(result.bool)
 						{
-							adapter.arraylist.remove(index);
-							if(object.total_numbers.equals(var_admin_phone)||adapter.arraylist.size()==0)
+
+							if(phone.equals(var_admin_phone)||adapter.arraylist.size()==0)
 							{
 								adapter.arraylist.clear();
 								Toast.makeText(getApplicationContext(), "Admin is removed so group is deleted", Toast.LENGTH_SHORT).show();
 								Alert_ok.show(this_context, "This group no longer exist");
+								finish();
+							}
+							else if(phone.equals(var_phone))
+							{
+								Toast.makeText(getApplicationContext(), "Successful exit from group!!", Toast.LENGTH_SHORT).show();
 								finish();
 							}
 							else
@@ -397,8 +433,12 @@ public class Activity_group_people extends Activity {
 								
 								Toast.makeText(getApplicationContext(), result.message, Toast.LENGTH_SHORT).show();
 							}
-							
-							adapter.notifyDataSetChanged();
+							if(!isFinishing())
+							{
+								load_group_people();
+							}
+
+
 						}
 						else
 						{
